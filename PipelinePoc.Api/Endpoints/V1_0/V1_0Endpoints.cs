@@ -6,7 +6,7 @@ public static class V1_0Endpoints
     {
         var items = app.MapGroup("/v1/items");
         
-        items.MapPost("/create", Item.CreateEndpoint.Action);
-        items.MapGet("/getall", Item.GetAllEndpoint.Action);
+        items.MapPost("/create", Item.CreateItem.Action);
+        items.MapGet("/getall", Item.GetAllItems.Action);
     }
 }
