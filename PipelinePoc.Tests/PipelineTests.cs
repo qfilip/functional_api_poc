@@ -1,4 +1,6 @@
 ﻿using FakeItEasy;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
 using PipelinePoc.Api;
 using PipelinePoc.Api.Handlers;
@@ -12,6 +14,36 @@ public class PipelineTests
     public PipelineTests()
     {
         _pipeline = new Pipeline(A.Fake<ILogger<Pipeline>>());
+    }
+
+    [Fact]
+    public async Task CustomMapper_WhenUsed_Returns_MappedResult()
+    {
+        var handlerResult = HandlerResult<int>.Ok(42);
+
+        var handler = (int _) => Task.FromResult(handlerResult);
+        
+        var customMapper = (HandlerResult<int> hr) =>
+            (hr.Status == HandlerResultStatus.Ok) ? Results.Accepted() : null;
+        
+        var iResult = await _pipeline.Pipe(handler, 0, "test-lambda", customMapper);
+
+        Assert.True(iResult is Accepted);
+    }
+
+    [Fact]
+    public async Task CustomMapper_WhenSkipped_Returns_PipelineMappedResult()
+    {
+        var handlerResult = HandlerResult<int>.NotFound();
+
+        var handler = (int _) => Task.FromResult(handlerResult);
+        
+        var customMapper = (HandlerResult<int> hr) =>
+            (hr.Status == HandlerResultStatus.Ok) ? Results.Accepted() : null;
+        
+        var iResult = await _pipeline.Pipe(handler, 0, "test-lambda", customMapper);
+        
+        Assert.True(iResult is NotFound<int>);
     }
 
     [Fact]

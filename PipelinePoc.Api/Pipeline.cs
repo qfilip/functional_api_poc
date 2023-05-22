@@ -14,17 +14,21 @@ public class Pipeline
     public async Task<IResult> Pipe<TRequest, TResponse>(
         Func<TRequest, Task<HandlerResult<TResponse>>> handler,
         TRequest request,
-        string actionName)
+        string actionName,
+        Func<HandlerResult<TResponse>, IResult>? customResultMapper = null)
     {
         _logger.LogInformation("Action {Action} started", actionName);
         var handlerResult = await handler(request);
         _logger.LogInformation("Action {Action} finished", actionName);
 
-        return handlerResult.Status switch
+        var result = customResultMapper?.Invoke(handlerResult);
+
+        return (handlerResult.Status, result) switch
         {
-            HandlerResultStatus.Ok => Results.Ok(handlerResult.Object),
-            HandlerResultStatus.NotFound => Results.NotFound(handlerResult.Object),
-            HandlerResultStatus.ValidationError => Results.BadRequest(handlerResult.Errors),
+            (_, IResult) => result,
+            (HandlerResultStatus.Ok, null) => Results.Ok(handlerResult.Object),
+            (HandlerResultStatus.NotFound, null) => Results.NotFound(handlerResult.Object),
+            (HandlerResultStatus.ValidationError, null) => Results.BadRequest(handlerResult.Errors),
             _ =>
                 throw new NotImplementedException($"Cannot handle status of {handlerResult.Status}")
         };
