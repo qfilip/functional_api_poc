@@ -58,9 +58,7 @@ public class CreateItemTests
         A.CallTo(() => _fItemStore.AddAsync(A<string>.That.Matches(x => x == input)))
             .Throws<InvalidOperationException>();
 
-        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-        {
-            await Endpoint.Action(input, _pipeline, _handler);
-        });
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            Endpoint.Action(input, _pipeline, _handler));
     }
 }
