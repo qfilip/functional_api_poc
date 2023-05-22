@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelinePoc.Api", "PipelinePoc.Api\PipelinePoc.Api.csproj", "{6DFE84FA-C296-4748-B35C-6709667F7893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PipelinePoc.Api", "PipelinePoc.Api\PipelinePoc.Api.csproj", "{6DFE84FA-C296-4748-B35C-6709667F7893}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipelinePoc.Tests", "PipelinePoc.Tests\PipelinePoc.Tests.csproj", "{A1662F53-BF0B-4189-ABA3-9D845944E8DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{6DFE84FA-C296-4748-B35C-6709667F7893}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DFE84FA-C296-4748-B35C-6709667F7893}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DFE84FA-C296-4748-B35C-6709667F7893}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1662F53-BF0B-4189-ABA3-9D845944E8DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1662F53-BF0B-4189-ABA3-9D845944E8DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1662F53-BF0B-4189-ABA3-9D845944E8DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1662F53-BF0B-4189-ABA3-9D845944E8DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
