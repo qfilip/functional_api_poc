@@ -20,22 +20,13 @@ public class Pipeline
         var handlerResult = await handler(request);
         _logger.LogInformation("Action {Action} finished", actionName);
 
-        if (handlerResult.Status == HandlerResultStatus.Ok)
+        return handlerResult.Status switch
         {
-            return Results.Ok(handlerResult.Object);
-        }
-        else if (handlerResult.Status == HandlerResultStatus.NotFound)
-        {
-            return Results.NotFound(handlerResult.Object);
-        }
-        else if (handlerResult.Status == HandlerResultStatus.ValidationError)
-        {
-            return Results.BadRequest(handlerResult.Errors);
-        }
-        else
-        {
-            var status = handlerResult.Status.ToString();
-            throw new NotImplementedException($"Cannot handle status of {status}");
-        }
+            HandlerResultStatus.Ok => Results.Ok(handlerResult.Object),
+            HandlerResultStatus.NotFound => Results.NotFound(handlerResult.Object),
+            HandlerResultStatus.ValidationError => Results.BadRequest(handlerResult.Errors),
+            _ =>
+                throw new NotImplementedException($"Cannot handle status of {handlerResult.Status}")
+        };
     }
 }
