@@ -27,13 +27,14 @@ public class GetAllItemsTests
     [Fact]
     public async Task OnCall_Returns_Ok()
     {
+        var fResult = new List<string> { "fnaah", "gauguin" };
         A.CallTo(() => _fItemStore.GetAllAsync())
-            .Returns(new List<string> { "fnaah", "gauguin" });
+            .Returns(fResult);
 
         var iResult = await Endpoint.Action(_pipeline, _handler);
         var result = iResult as Ok<IEnumerable<string>>;
 
         Assert.NotNull(result);
-        Assert.True(result.Value!.Count() == 2);
+        Assert.True(result.Value!.Count() == fResult.Count());
     }
 }
