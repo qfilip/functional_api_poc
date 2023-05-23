@@ -9,6 +9,12 @@ builder.Services.AddCors(b => b.AddDefaultPolicy(o => o.AllowAnyHeader().AllowAn
 
 ServiceRegistry.AddAppServices(builder);
 
+builder.Host.UseDefaultServiceProvider((_, options) =>
+{
+    options.ValidateOnBuild = true;
+    options.ValidateScopes = true;
+});
+
 var app = builder.Build();
 
 EndpointsMap.Map(app);

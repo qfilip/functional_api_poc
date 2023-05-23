@@ -1,11 +1,11 @@
 ﻿using FakeItEasy;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
-using PipelinePoc.Api.DataAccess;
 using PipelinePoc.Api;
+using PipelinePoc.Api.DataAccess;
 
 using Endpoint = PipelinePoc.Api.Endpoints.V1_0.Item.GetAllItems;
 using Handler = PipelinePoc.Api.Handlers.Item.GetAllItems.Handler;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace PipelinePoc.Tests.Endpoints.V1_0.Item;
 
